@@ -1,0 +1,40 @@
+name: Make use of my new branch action
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/use-clean-branch.yml
+
+jobs:
+  use-clean-name:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: sleepypikachu/actions-branch-to-docker-tag-name@main
+        id: branch-to-docker-tag
+        with:
+          branch: "feature/some-branch-name"
+          prefix: "feature/"
+
+      - uses: sleepypikachu/actions-branch-to-docker-tag-name@main
+        id: branch-to-docker-tag-2
+        with:
+          branch: "master"
+          main: "master"
+
+      - uses: sleepypikachu/actions-branch-to-docker-tag-name@main
+        id: branch-to-docker-tag-3
+        with:
+          branch: "main"
+
+      - uses: sleepypikachu/actions-branch-to-docker-tag-name@main
+        id: branch-to-docker-tag-4
+        with:
+          branch: "thequickbrownfoxjumpsoverthelazydogthequickbrownfoxjumpsoverthelazydogthequickbrownfoxjumpsoverthelazydogthequickbrownfoxjumpsoverthelazydogthequickbrownfoxjumpsoverthelazydogthequickbrownfoxjumpsoverthelazydog"
+
+      - uses: sleepypikachu/actions-branch-to-docker-tag-name@main
+        id: branch-to-docker-tag-5
+        with:
+          branch: "---invalidcharacters!!!#£smiles:-)"
+
+      - name: "Print out"
+        run: echo "${{ steps.branch-to-docker-tag.outputs.tag-name }} ${{ steps.branch-to-docker-tag-2.outputs.tag-name }} ${{ steps.branch-to-docker-tag-3.outputs.tag-name }} ${{ steps.branch-to-docker-tag-4.outputs.tag-name }} ${{ steps.branch-to-docker-tag-5.outputs.tag-name }}"
