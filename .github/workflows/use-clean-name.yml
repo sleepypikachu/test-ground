@@ -1,0 +1,30 @@
+name: Make use of my new image action
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/use-clean-name.yml
+
+jobs:
+  use-clean-name:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: sleepypikachu/actions-path-to-docker-image-name@main
+        id: path-to-docker-image
+        with:
+          path: "./docker/foo/bar"
+          prefix: "./docker"
+
+      - uses: sleepypikachu/actions-path-to-docker-image-name@main
+        id: path-to-docker-image-2
+        with:
+          path: "/foo/bar/"
+          prefix: "./docker"
+
+      - uses: sleepypikachu/actions-path-to-docker-image-name@main
+        id: path-to-docker-image-3
+        with:
+          path: "/foo/bar/baz"
+
+      - name: "Print out"
+        run: echo "${{ steps.path-to-docker-image.outputs.image-name }} ${{ steps.path-to-docker-image-2.outputs.image-name }} ${{ steps.path-to-docker-image-3.outputs.image-name }}"
