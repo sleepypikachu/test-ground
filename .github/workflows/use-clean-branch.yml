@@ -9,7 +9,7 @@ jobs:
   use-clean-name:
     runs-on: "ubuntu-latest"
     steps:
-      - uses: sleepypikachu/actions-branch-to-docker-tag-name@main
+      - uses: sleepypikachu/actions-branch-to-docker-tag-name@v1
         id: branch-to-docker-tag
         with:
           branch: "feature/some-branch-name"
