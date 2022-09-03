@@ -26,5 +26,10 @@ jobs:
         with:
           path: "/foo/bar/baz"
 
+      - uses: sleepypikachu/actions-path-to-docker-image-name@main
+        id: path-to-docker-image-4
+        with:
+          path: "/___init___/foo/bar../baz.."
+
       - name: "Print out"
-        run: echo "${{ steps.path-to-docker-image.outputs.image-name }} ${{ steps.path-to-docker-image-2.outputs.image-name }} ${{ steps.path-to-docker-image-3.outputs.image-name }}"
+        run: echo "${{ steps.path-to-docker-image.outputs.image-name }} ${{ steps.path-to-docker-image-2.outputs.image-name }} ${{ steps.path-to-docker-image-3.outputs.image-name }} ${{ steps.path-to-docker-image-4.outputs.image-name }}"
