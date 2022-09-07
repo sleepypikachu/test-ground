@@ -1,0 +1,29 @@
+name: Docker filter
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/docker-filter.yml
+
+jobs:
+  use-docker-filter:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: sleepypikachu/actions-find-docker-paths@main
+        id: find-docker-paths-1
+          
+      - uses: sleepypikachu/actions-find-docker-paths@main
+        id: find-docker-paths-2
+        with:
+          path: foo
+
+      - uses: sleepypikachu/actions-find-docker-paths@main
+        id: find-docker-paths-3
+        with:
+          changes: '["./foo/bar/baz/init.sh", "./foo/bar/baz/x.js", "./foo/bar/jag/init.sh"]'
+
+      - name: "Print out"
+        run: echo "${{ steps.find-docker-paths-1.outputs.filtered-paths }} ${{ steps.find-docker-paths-2.outputs.filtered-paths }} ${{ steps.find-docker-paths-3.outputs.filtered-paths }} ${{ steps.find-docker-paths-4.outputs.filtered-paths }} ${{ steps.find-docker-paths-5.outputs.filtered-paths }}"
